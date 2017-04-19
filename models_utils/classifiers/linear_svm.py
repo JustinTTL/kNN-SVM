@@ -47,15 +47,6 @@ def structured_loss_simple(W, X, y, reg):
   loss += 0.5 * reg * np.sum(W * W)
   dW   += reg * W
 
-  #############################################################################
-  # TODO:                                                                     #
-  # Compute the gradient of the loss function and store it dW.                #
-  # Rather than first computing the loss and then computing the derivative,   #
-  # it may be simpler to compute the derivative at the same time that the     #
-  # loss is being computed. As a result you may need to modify some of the    #
-  # code above to compute the gradient.                                       #
-  ############################################################################# 
-
 
   return loss, dW
 
@@ -68,12 +59,6 @@ def structured_loss_fast(W, X, y, reg):
   """
   loss = 0.0
   dW = np.zeros(W.shape) # initialize the gradient as zero
-
-  #############################################################################
-  # TODO:                                                                     #
-  # Implement a vectorized version of the structured SVM loss, storing the    #
-  # result in loss.                                                           #
-  #############################################################################
 
   # compute the loss and the gradient
   scores = X.dot(W)
@@ -92,27 +77,12 @@ def structured_loss_fast(W, X, y, reg):
   # Add regularization to the loss.
   loss += 0.5 * reg * np.sum(W * W)
 
-  #############################################################################
-  #                             END OF YOUR CODE                              #
-  #############################################################################
-
-
-  #############################################################################
-  # TODO:                                                                     #
-  # Implement a vectorized version of the gradient for the structured SVM     #
-  # loss, storing the result in dW.                                           #
-  #                                                                           #
-  # Hint: Instead of computing the gradient from scratch, it may be easier    #
-  # to reuse some of the intermediate values that you used to compute the     #
-  # loss.                                                                     #
-  #############################################################################
+  # Calcualte gradients based on margins where loss was accounted for
   grad = (margin > 0) * 1
   grad[range(y.shape[0]), y] = 0
   grad[range(y.shape[0]), y] = -np.sum(grad, axis=1)
     
   dW = X.T.dot(grad)/X.shape[0]
-  #############################################################################
-  #                             END OF YOUR CODE                              #
-  #############################################################################
+
 
   return loss, dW
