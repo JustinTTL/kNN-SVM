@@ -23,15 +23,6 @@ def softmax_loss_simple(W, X, y, reg):
   loss = 0.0
   dW = np.zeros_like(W)
 
-  #############################################################################
-  # TODO: Compute the softmax loss and its gradient using explicit loops.     #
-  # Store the loss in loss and the gradient in dW. If you are not careful     #
-  # here, it is easy to run into numeric instability. Don't forget the        #
-  # regularization!                                                           #
-  # If you get stuck, don't forget about these resources:                     #
-  # http://cs231n.github.io/neural-networks-case-study/#linear                #
-  # http://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative/#
-  #############################################################################
   num_train = X.shape[0]
   num_class = W.shape[1]
     
@@ -53,9 +44,7 @@ def softmax_loss_simple(W, X, y, reg):
     
   loss += 0.5*reg* np.sum(W*W)
   dW   += reg*W
-  #############################################################################
-  #                          END OF YOUR CODE                                 #
-  #############################################################################
+
 
   return loss, dW
 
@@ -70,12 +59,6 @@ def softmax_loss_fast(W, X, y, reg):
   loss = 0.0
   dW = np.zeros_like(W)
 
-  #############################################################################
-  # TODO: Compute the softmax loss and its gradient using no explicit loops.  #
-  # Store the loss in loss and the gradient in dW. If you are not careful     #
-  # here, it is easy to run into numeric instability. Don't forget the        #
-  # regularization!                                                           #
-  #############################################################################
   num_train = X.shape[0]
   num_dim   = X.shape[1]
   num_class = W.shape[1]
@@ -92,9 +75,7 @@ def softmax_loss_fast(W, X, y, reg):
   dW += reg*W
   loss += np.sum(corr_log_error)/num_train
   loss += 0.5*reg*np.sum(W*W) 
-  #############################################################################
-  #                          END OF YOUR CODE                                 #
-  #############################################################################
+
 
   return loss, dW
 
